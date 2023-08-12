@@ -13,8 +13,9 @@ void callbackDispatcher() {
   });
 }
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+
+  // WidgetsFlutterBinding.ensureInitialized();
   // Workmanager().initialize(callbackDispatcher);
   runApp(const MyApp());
 }
