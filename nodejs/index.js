@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 
 app.get('/notifications', (req, res) => {
-  const responseData = { message: 'Hello from the server!' };
+  const responseData = { message: 'Hello from the server!', status:'success' };
   res.json(responseData);
 });
 
