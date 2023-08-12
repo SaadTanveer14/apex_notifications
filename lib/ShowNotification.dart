@@ -20,6 +20,7 @@ class _ShowNotificationScreenState extends State<ShowNotificationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
   }
 
   Future<void> showNotification(String message) async {
@@ -57,8 +58,7 @@ class _ShowNotificationScreenState extends State<ShowNotificationScreen> {
       backgroundColor: Colors.white,
       body: ElevatedButton(
           onPressed: () async{
-            showNotification( await fetchMessage());
-            
+            //showNotification( await fetchMessage());
           },
           child: Text(
             'Show Notification'
@@ -74,14 +74,14 @@ class _ShowNotificationScreenState extends State<ShowNotificationScreen> {
       final responseData = json.decode(response.body);
       setState(() {
         message = responseData['message'];
-      
       });
+      showNotification(message);
       return message;
     } else {
       setState(() {
         message = 'API call failed with status code: ${response.statusCode}';
       });
-      
+      showNotification(message);
     }
     return message;
 
