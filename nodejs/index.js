@@ -8,5 +8,5 @@ app.get('/notifications', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is listening at http://192.168.100.13:${port}`);
+  console.log(`Server is listening at http://localhost:${port}`);
 });

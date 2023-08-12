@@ -1,7 +1,7 @@
 import 'package:apex_notifications/ShowNotification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
-
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
@@ -13,11 +13,15 @@ void callbackDispatcher() {
   });
 }
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   // Workmanager().initialize(callbackDispatcher);
   runApp(const MyApp());
 }
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
