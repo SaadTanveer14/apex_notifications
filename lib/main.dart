@@ -9,17 +9,19 @@ import 'package:http/http.dart' as http;
 final _localNotifications = FlutterLocalNotificationsPlugin();
 String message = '';
 
+@pragma('vm:entry-point') 
 void callbackDispatcher() async{
   Workmanager().executeTask((task, inputData) async {
     // Perform your API call here and handle the response
     // If the API response is successful, show a notification
     // using the flutter_local_notifications package
+
     await fetchMessage();
     return Future.value(true);
   });
 }
 
-Future<String> fetchMessage() async {
+Future<void> fetchMessage() async {
   final response = await http.get(Uri.parse('https://c647-182-180-50-4.ngrok-free.app/notifications'));
 
   if (response.statusCode == 200) {
@@ -28,16 +30,21 @@ Future<String> fetchMessage() async {
 
     // setState(() {
     // });
-    showNotification(message);
-    return message;
+
+    await showNotification(message);
+
+    //return message;
   } else {
     message = 'API call failed with status code: ${response.statusCode}';
 
     // setState(() {
     // });
-    showNotification(message);
   }
-  return message;
+
+
+  await showNotification(message);
+
+  //return message;
 
 }
 
@@ -72,16 +79,22 @@ Future<void> showNotification(String message) async {
 
 
 
-void main() {
+void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callbackDispatcher);
-  //Workmanager().registerOneOffTask("task-identifier", "simpleTask", );
+
+  await Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: true
+    );
+
+  //String response = await fetchMessage();
+
   Workmanager().registerPeriodicTask(
     "periodic-task-identifier",
     "simplePeriodicTask",
-    frequency: Duration(seconds: 30),
-    inputData: <String, dynamic>{},
+    frequency: Duration(minutes: 15),
+    inputData: <String, dynamic>{'response': "Success debug"},
   );
   runApp(const MyApp());
 }
